@@ -79,9 +79,21 @@ async def startup():
             await conn.run_sync(Base.metadata.create_all)
         await create_db_and_tables()
         print("Database setup complete")
+        
+        # Seed data in background after startup
+        import asyncio
+        asyncio.create_task(seed_data_background())
+        
     except Exception as e:
-        print(f"Startup error: {e}")
-        # Don't fail startup, just log the error
+        print(f"Database already initialized: {e}")
+
+async def seed_data_background():
+    try:
+        print("Starting background course seeding...")
+        await seed_data()
+        print("Course seeding completed")
+    except Exception as e:
+        print(f"Background seeding failed: {e}")
     
     
 app.include_router(books.router)
