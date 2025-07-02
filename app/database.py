@@ -1,17 +1,22 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-
-
-
-#import url from .env
+from sqlalchemy.orm import declarative_base, sessionmaker
 from dotenv import load_dotenv
 import os
+
+# Load environment variables
 load_dotenv()
+
+# Validate DATABASE_URL exists
 SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL")
+if not SQLALCHEMY_DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
 
 # Create async SQLAlchemy engine
-engine = create_async_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_async_engine(
+    SQLALCHEMY_DATABASE_URL,
+    echo=False,
+    pool_pre_ping=True,
+)
 
 # Create async session class
 SessionLocal = sessionmaker(
