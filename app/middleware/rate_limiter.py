@@ -11,8 +11,8 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         app,
         limit: int = 5,
         window: int = 60,
-        # Accept a list of paths instead of a single string
-        target_paths: List[str] = ["/auth/register"]
+        target_paths: List[str] = None  # List of paths to target for rate limiting
+    
     ):
         super().__init__(app)
         self.limit = limit

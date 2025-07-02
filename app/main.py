@@ -37,7 +37,7 @@ origins = [
   "https://campusbooks.se",
   "https://www.campusbooks.se", 
   "https://campusbooks.vercel.app", 
-  "https://*.herokuapp.com", # fix later
+  "https://campusbooks-e75ec32ddc5b.herokuapp.com/"
 
 ]
 
@@ -54,17 +54,19 @@ app.add_middleware(
 # Limit critical paths like auth and resource creation
 app.add_middleware(
     RateLimitMiddleware,
-    limit=60,  # Requests per window per IP
+    limit=30,  
     window=60, # Window in seconds (1 minute)
     # List of paths to target for rate limiting:
     target_paths=[
-        # Authentication endpoints
         "/auth/register",
         "/auth/jwt/login",
         "/auth/forgot-password",
+        "/auth/reset-password",
         "/auth/request-verify-token",
-        "/books/", # POST request to create a book
-        
+        "/auth/verify",
+        "/books/",
+        "/users/me",
+        "/users/",
     ]
 )
 
