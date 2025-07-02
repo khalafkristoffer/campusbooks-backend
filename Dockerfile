@@ -16,5 +16,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the application code
 COPY . .
 
-# Command to run the application
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
+CMD gunicorn -k uvicorn.workers.UvicornWorker app.main:app --host 0.0.0.0 --port $PORT

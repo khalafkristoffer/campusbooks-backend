@@ -1,10 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# First, import and register all models
 from app.models import *  # This will import all models in the correct order
 
-# Then import other modules that depend on the models
 from app.routes import books
 from app.routes import courses
 from app.database import Base, engine
