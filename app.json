@@ -1,0 +1,42 @@
+{
+  "name": "campusbooks-backend",
+  "description": "Campus Books Backend API - FastAPI application",
+  "repository": "https://github.com/your-username/campusbooks-backend",
+  "logo": "",
+  "keywords": ["fastapi", "python", "api", "backend", "books"],
+  "image": "heroku/python",
+  "stack": "heroku-22",
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "eco"
+    }
+  },
+  "addons": [],
+  "env": {
+    "DATABASE_URL": {
+      "description": "Supabase PostgreSQL connection string"
+    },
+    "SECRET": {
+      "description": "Secret key for JWT tokens",
+      "generator": "secret"
+    },
+    "dbusername": {
+      "description": "Cloudinary cloud name"
+    },
+    "apikey": {
+      "description": "Cloudinary API key"
+    },
+    "apisecret": {
+      "description": "Cloudinary API secret"
+    }
+  },
+  "scripts": {
+    "postdeploy": "echo 'Deployment completed successfully!'"
+  }
+}

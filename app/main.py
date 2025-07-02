@@ -33,12 +33,12 @@ app = FastAPI(
 )
 
 origins = [
-  "http://localhost:5173",  # Frontend development URL
-  "http://localhost:8000",  # Backend URL
-  "https://chalmersshelf-api.onrender.com",
-  "https://campusbooks.se",  # Production URL
-  "https://www.campusbooks.se",  # Production URL
-  "https://campusbooks.vercel.app" # Frontend production URL
+
+  "https://campusbooks.se",
+  "https://www.campusbooks.se", 
+  "https://campusbooks.vercel.app", 
+  "https://*.herokuapp.com", # fix later
+
 ]
 
 # Add CORS middleware first
@@ -111,5 +111,13 @@ app.include_router(
 @app.get("/authenticated-route")
 async def authenticated_route(user: User = Depends(current_active_user)):
     return {"message": f"Hello {user.email}!"}
+
+@app.get("/")
+async def root():
+    return {"message": "Campus Books API is running!", "status": "healthy"}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "campusbooks-backend"}
 
 
