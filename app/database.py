@@ -12,15 +12,15 @@ if not SQLALCHEMY_DATABASE_URL:
     raise ValueError("DATABASE_URL environment variable is not set")
 
 # Create async SQLAlchemy engine
-engine = create_async_engine(
-    SQLALCHEMY_DATABASE_URL,
+asyncengine = create_async_engine(
+    SQLALCHEMY_DATABASE_URL,  # Remove 'await' here
     echo=False,
     pool_pre_ping=True,
 )
 
 # Create async session class
 SessionLocal = sessionmaker(
-    engine, 
+    asyncengine,  # Use 'asyncengine' not 'engine'
     class_=AsyncSession, 
     expire_on_commit=False
 )
