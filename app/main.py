@@ -74,10 +74,14 @@ from app.data.coursedata import seed_data
 
 @app.on_event("startup")
 async def startup():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
         await create_db_and_tables()
-    await seed_data()
+        print("Database setup complete")
+    except Exception as e:
+        print(f"Startup error: {e}")
+        # Don't fail startup, just log the error
     
     
 app.include_router(books.router)
