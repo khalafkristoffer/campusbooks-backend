@@ -7,7 +7,7 @@ from app.routes import books
 from app.routes import courses
 from app.database import Base
 from app.userDB import create_db_and_tables
-from app.database import asyncengine
+from app.database import engine
 from dotenv import load_dotenv
 import os 
 import cloudinary
@@ -74,7 +74,7 @@ from app.data.coursedata import seed_data
 
 @app.on_event("startup")
 async def startup():
-    async with asyncengine.begin() as conn:
+    async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
         await create_db_and_tables()
     await seed_data()

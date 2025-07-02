@@ -1,5 +1,5 @@
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.orm import declarative_base
 from dotenv import load_dotenv
 import os
 
@@ -12,16 +12,15 @@ if not SQLALCHEMY_DATABASE_URL:
     raise ValueError("DATABASE_URL environment variable is not set")
 
 # Create async SQLAlchemy engine
-asyncengine = create_async_engine(
-    SQLALCHEMY_DATABASE_URL,  # Remove 'await' here
+engine = create_async_engine(
+    SQLALCHEMY_DATABASE_URL,
     echo=False,
     pool_pre_ping=True,
 )
 
 # Create async session class
-SessionLocal = sessionmaker(
-    asyncengine,  # Use 'asyncengine' not 'engine'
-    class_=AsyncSession, 
+SessionLocal = async_sessionmaker(
+    engine,
     expire_on_commit=False
 )
 
